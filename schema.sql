@@ -13,7 +13,7 @@ START TRANSACTION;
 
 CREATE TABLE
   Address (
-    address_id VARCHAR(255) PRIMARY KEY,
+    address_id INT PRIMARY KEY AUTO_INCREMENT,
     address_line_1 VARCHAR(255),
     address_line_2 VARCHAR(255),
     street_name VARCHAR(255),
@@ -37,7 +37,7 @@ CREATE TABLE
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     contact_number VARCHAR(255),
-    address_id VARCHAR(255),
+    address_id INT,
     is_registered BOOLEAN,
     store_id INT,
     FOREIGN KEY (store_id) REFERENCES Store (store_id),
@@ -193,7 +193,7 @@ CREATE TABLE
     contact_person VARCHAR(255),
     email VARCHAR(255),
     contact_number VARCHAR(255),
-    address_id VARCHAR(255),
+    address_id INT,
     status VARCHAR(255),
     FOREIGN KEY (address_id) REFERENCES Address (address_id)
   );
@@ -370,7 +370,7 @@ CREATE TABLE
 CREATE TABLE
   Physical_Store (
     store_id INT PRIMARY KEY,
-    address_id VARCHAR(255),
+    address_id INT,
     FOREIGN KEY (store_id) REFERENCES Store (store_id) ON DELETE CASCADE,
     FOREIGN KEY (address_id) REFERENCES Address (address_id)
   );

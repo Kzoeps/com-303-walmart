@@ -368,6 +368,15 @@ CREATE TABLE
   );
 
 CREATE TABLE
+  Vendor_Product (
+    vendor_id INT NOT NULL,
+    product_id INT NOT NULL,
+    PRIMARY KEY (vendor_id, product_id),
+    FOREIGN KEY (vendor_id) REFERENCES Vendor (vendor_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES Product (upc) ON DELETE CASCADE
+  );
+
+CREATE TABLE
   Physical_Store (
     store_id INT PRIMARY KEY,
     address_id INT,

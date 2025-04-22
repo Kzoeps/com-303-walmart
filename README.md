@@ -9,7 +9,7 @@ Repo for Walmart DB design
 1. and then run `pip install -r requirements.txt'   
 
 
-**any time you install a new package freeze requiremenst using this command: `pip freeze -r > requirements.txt`**
+**any time you install a new package freeze requiremenst using this command: `pip freeze > requirements.txt`**
 
 
 

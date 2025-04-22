@@ -7,14 +7,17 @@ INSERT IGNORE INTO Address (
   city_name,
   state_name,
   zipcode
-) VALUES (
-  '123 Main St',
-  NULL,
-  'Main St',
-  'Anytown',
-  'NY',
-  '12345'
-);
+)
+VALUES
+  (
+    1,
+    '123 Main St',
+    NULL,
+    'Main St',
+    'Anytown',
+    'NY',
+    '12345'
+  );
 
 -- 2. Store
 INSERT IGNORE INTO Store (
@@ -23,22 +26,20 @@ INSERT IGNORE INTO Store (
   manager_name,
   phone_number,
   hours
-) VALUES (
-  1,
-  'Main Street Store',
-  'Alice Johnson',
-  '555-123-4567',
-  'Mon–Sun 9am–9pm'
-);
+)
+VALUES
+  (
+    1,
+    'Main Street Store',
+    'Alice Johnson',
+    '555-123-4567',
+    'Mon–Sun 9am–9pm'
+  );
 
 -- 3. Physical_Store link
-INSERT IGNORE INTO Physical_Store (
-  store_id,
-  address_id
-) VALUES (
-  1,
-  1
-);
+INSERT IGNORE INTO Physical_Store (store_id, address_id)
+VALUES
+  (1, 1);
 
 -- 4. Tax categories
 INSERT IGNORE INTO Tax_Category (
@@ -46,9 +47,15 @@ INSERT IGNORE INTO Tax_Category (
   name,
   description,
   is_food_eligible
-) VALUES
+)
+VALUES
   (1, 'General', 'Standard retail tax', FALSE),
-  (2, 'Food',    'Reduced tax rate for food items', TRUE);
+  (
+    2,
+    'Food',
+    'Reduced tax rate for food items',
+    TRUE
+  );
 
 -- 5. State tax rates
 INSERT IGNORE INTO State_Tax_Rate (
@@ -57,19 +64,17 @@ INSERT IGNORE INTO State_Tax_Rate (
   rate,
   effective_date,
   is_active
-) VALUES
+)
+VALUES
   ('NY', 1, 0.0825, '2025-01-01', TRUE),
   ('NY', 2, 0.0400, '2025-01-01', TRUE);
 
 -- 6. Brands
-INSERT IGNORE INTO Brand (
-  brand_id,
-  brand_name,
-  brand_category
-) VALUES
-  (1, 'Acme Corp',    'Electronics'),
-  (2, 'Fresh Farms',  'Grocery'),
-  (3, 'StyleWear',    'Clothing');
+INSERT IGNORE INTO Brand (brand_id, brand_name, brand_category)
+VALUES
+  (1, 'Acme Corp', 'Electronics'),
+  (2, 'Fresh Farms', 'Grocery'),
+  (3, 'StyleWear', 'Clothing');
 
 -- 7. Products
 INSERT IGNORE INTO Product (
@@ -80,10 +85,27 @@ INSERT IGNORE INTO Product (
   storage_instructions,
   brand_id,
   tax_category_id
-) VALUES
-  (1000001, 'USB Cable',     '1m',   50,  'Keep dry',         1, 1),
-  (2000001, 'Organic Apple', '1 lb', 454, 'Refrigerate',      2, 2),
-  (3000001, 'Basic T-Shirt', 'M',    200, 'Machine wash cold',3, 1);
+)
+VALUES
+  (1000001, 'USB Cable', '1m', 50, 'Keep dry', 1, 1),
+  (
+    2000001,
+    'Organic Apple',
+    '1 lb',
+    454,
+    'Refrigerate',
+    2,
+    2
+  ),
+  (
+    3000001,
+    'Basic T-Shirt',
+    'M',
+    200,
+    'Machine wash cold',
+    3,
+    1
+  );
 
 -- 8. Inventory levels (Carries)
 INSERT IGNORE INTO Carries (
@@ -93,7 +115,24 @@ INSERT IGNORE INTO Carries (
   quantity,
   min_quantity,
   max_quantity
-) VALUES
-  (1, 1000001,  9.99, 100,  10, 200),
-  (1, 2000001,  0.99, 200,  50, 500),
-  (1, 3000001, 14.99,  50,  10, 100);
+)
+VALUES
+  (1, 1000001, 9.99, 100, 10, 200),
+  (1, 2000001, 0.99, 200, 50, 500),
+  (1, 3000001, 14.99, 50, 10, 100);
+
+INSERT IGNORE INTO Customer (
+  customer_id,
+  first_name,
+  last_name,
+  contact_number,
+  address_id,
+  is_registered,
+  store_id
+)
+VALUES
+  (1, 'Bob', 'Smith', '555-000-0000', 1, TRUE, 1);
+
+INSERT IGNORE INTO CustomerCard (card_hash, customer_id, addition_date)
+VALUES
+  ('0423-VISA-354', 1, '2025-04-01');

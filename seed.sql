@@ -1,4 +1,5 @@
--- 1. Address(es)
+-- Complete seed data for Walmart schema
+-- 1. Addresses
 INSERT IGNORE INTO Address (
   address_id,
   address_line_1,
@@ -17,6 +18,42 @@ VALUES
     'Anytown',
     'NY',
     '12345'
+  ),
+  (
+    2,
+    '456 Oak Ave',
+    'Suite 5',
+    'Oak Ave',
+    'Othertown',
+    'NY',
+    '12346'
+  ),
+  (
+    3,
+    '789 Pine Rd',
+    NULL,
+    'Pine Rd',
+    'Bigcity',
+    'CA',
+    '90001'
+  ),
+  (
+    4,
+    '101 Industrial Way',
+    NULL,
+    'Industrial Way',
+    'Townsville',
+    'TX',
+    '75001'
+  ),
+  (
+    5,
+    '202 Warehouse Rd',
+    'Building 3',
+    'Warehouse Rd',
+    'Village',
+    'FL',
+    '32004'
   );
 
 -- 2. Store
@@ -121,6 +158,7 @@ VALUES
   (1, 2000001, 0.99, 200, 50, 500),
   (1, 3000001, 14.99, 50, 10, 100);
 
+-- 9. Customer
 INSERT IGNORE INTO Customer (
   customer_id,
   first_name,
@@ -131,8 +169,51 @@ INSERT IGNORE INTO Customer (
   store_id
 )
 VALUES
-  (1, 'Bob', 'Smith', '555-000-0000', 1, TRUE, 1);
+  (1, 'Bob', 'Smith', '555-000-0000', 2, TRUE, 1);
 
+-- 10. CustomerCard
 INSERT IGNORE INTO CustomerCard (card_hash, customer_id, addition_date)
 VALUES
   ('0423-VISA-354', 1, '2025-04-01');
+
+-- 11. Vendors
+INSERT IGNORE INTO Vendor (
+  vendor_id,
+  contact_person,
+  email,
+  contact_number,
+  address_id,
+  status
+)
+VALUES
+  (
+    1,
+    'John Doe',
+    'john@acmedist.com',
+    '555-900-0001',
+    3,
+    'Active'
+  ),
+  (
+    2,
+    'Mary Lee',
+    'mary@freshfarms.co',
+    '555-900-0002',
+    4,
+    'Active'
+  ),
+  (
+    3,
+    'Carlos Ruiz',
+    'carlos@stylewear.biz',
+    '555-900-0003',
+    5,
+    'Active'
+  );
+
+-- 12. Vendor ↔ Product mappings
+INSERT IGNORE INTO Vendor_Product (vendor_id, product_id)
+VALUES
+  (1, 1000001),
+  (2, 2000001),
+  (3, 3000001);

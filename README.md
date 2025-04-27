@@ -119,6 +119,9 @@ All operations use MySQL transactions for atomicity and consistency.
 
 ## Notes 
 - **30‑Day Payment Terms**: aligns with standard vendor net‑30 invoicing practices.
+- **Invoice generation & Cost**: Assume that the quoted cost is what the  vendor will charge for now. So it automatically picks up that price and calculates it in the invoice generation.
+- **Flow for vendor reorder**: run vendor rerder ==> run invoice generation ==> run fulfillment
+the above also has an assumption that the shipment is marked as fullfilled by a walmart employee when it arrives at the store and once it arrive we have the code to bump inventory
 
 ---
 

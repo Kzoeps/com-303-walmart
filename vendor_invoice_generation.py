@@ -73,8 +73,7 @@ def link_invoice_to_vendor_order(cursor, order_id, invoice_id):
     cursor.execute(
         """
         UPDATE Vendor_Order
-           SET invoice_id = %s,
-               fulfilled  = TRUE
+           SET invoice_id = %s
          WHERE order_id = %s;
     """,
         (invoice_id, order_id),

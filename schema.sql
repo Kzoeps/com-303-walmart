@@ -161,9 +161,10 @@ CREATE TABLE
     FOREIGN KEY (customer_id) REFERENCES Customer (customer_id)
   );
 
+-- this is for customers
 CREATE TABLE
   Order_Line_Item (
-    line_id INT PRIMARY KEY,
+    line_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     product_id INT,
     quantity INT,
@@ -211,9 +212,10 @@ CREATE TABLE
     FOREIGN KEY (store_id) REFERENCES Store (store_id)
   );
 
+-- this is for vendors
 CREATE TABLE
   Order_Line (
-    order_line_id INT PRIMARY KEY,
+    order_line_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     product_id INT,
     unit_cost DECIMAL(10, 2),
@@ -225,7 +227,7 @@ CREATE TABLE
 -- Invoice & receipt system
 CREATE TABLE
   Invoice (
-    invoice_id INT PRIMARY KEY,
+    invoice_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     transaction_id INT UNIQUE,
     invoice_number VARCHAR(255),
     issue_date DATE,
@@ -233,6 +235,8 @@ CREATE TABLE
     payment_status VARCHAR(255),
     total_amount DECIMAL(10, 2),
     vendor_id INT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (transaction_id) REFERENCES Transaction_Header (transaction_id),
     FOREIGN KEY (vendor_id) REFERENCES Vendor (vendor_id)
   );

@@ -217,3 +217,6 @@ VALUES
   (1, 1000001, 5),
   (2, 2000001, 8),
   (3, 3000001, 20);
+
+-- artificial scarcity to test vendor order. Remove once done
+UPDATE Carries SET quantity = 9 WHERE store_id=1 and upc=1000001;

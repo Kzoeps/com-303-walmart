@@ -212,8 +212,8 @@ VALUES
   );
 
 -- 12. Vendor ↔ Product mappings
-INSERT IGNORE INTO Vendor_Product (vendor_id, product_id)
+INSERT IGNORE INTO Vendor_Product (vendor_id, product_id, quoted_cost)
 VALUES
-  (1, 1000001),
-  (2, 2000001),
-  (3, 3000001);
+  (1, 1000001, 5),
+  (2, 2000001, 8),
+  (3, 3000001, 20);

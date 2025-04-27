@@ -230,7 +230,7 @@ CREATE TABLE
     invoice_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     transaction_id INT UNIQUE,
     invoice_number VARCHAR(255),
-    issue_date DATE,
+    issue_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     due_date DATE,
     payment_status VARCHAR(255),
     total_amount DECIMAL(10, 2),
@@ -243,7 +243,7 @@ CREATE TABLE
 
 CREATE TABLE
   Invoice_Line_Item (
-    invoice_line_id INT PRIMARY KEY,
+    invoice_line_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     invoice_id INT,
     product_id INT,
     quantity INT,

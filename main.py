@@ -47,5 +47,15 @@ for store_id, vendor_id, product_id, reorder_quantity in rows:
         product_orders[key] = []
     product_orders[key].append((product_id, reorder_quantity))
 
-print("Products to order:")
-print(product_orders)
+
+insert_vendor_order_sql = """
+INSERT INTO Vendor_Order
+  (vendor_id, store_id, fulfilled)
+VALUES
+  (%s, %s, FALSE);
+"""
+# … same logic for fetching lastrowid, inserting lines, and committing …
+
+
+for (store_id, vendor_id), items in product_orders.items():
+    [item_id, reorder_quantity] = items[0]

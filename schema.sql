@@ -200,12 +200,13 @@ CREATE TABLE
 
 CREATE TABLE
   Vendor_Order (
-    order_id INT PRIMARY KEY,
-    vendor_id INT,
-    store_id INT,
+    order_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    vendor_id INT NOT NULL,
+    store_id INT NOT NULL,
     invoice_id INT,
-    order_date DATE,
-    fulfilled BOOLEAN,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    fulfilled BOOLEAN NOT NULL,
     FOREIGN KEY (vendor_id) REFERENCES Vendor (vendor_id),
     FOREIGN KEY (store_id) REFERENCES Store (store_id)
   );

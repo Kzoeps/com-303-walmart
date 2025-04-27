@@ -1,5 +1,6 @@
 import mysql.connector
 from config import DB_USER, DB_PASSWORD, DB_NAME
+from vendor_invoice_generation import process_invoice  # Invoice generation routine
 
 # ─── SQL CONSTANTS ─────────────────────────────────────────────────────────────
 
@@ -107,7 +108,7 @@ def process_reorders():
         rows = fetch_low_stock_items(cursor)
         product_orders = group_product_orders(rows)
 
-        if len(product_orders) == 0:
+        if not product_orders:
             print("✅ No low-stock items to reorder.")
             return
 
@@ -177,20 +178,27 @@ def fulfill_order(order_id):
 
 def main():
     print("Select an action:")
-    print("  1) Reorder low‐stock items")
+    print("  1) Reorder low‑stock items")
     print("  2) Fulfill an order")
-    choice = input("Enter 1 or 2: ").strip()
+    print("  3) Generate an invoice for an order")
+    choice = input("Enter 1, 2 or 3: ").strip()
 
     if choice == "1":
         process_reorders()
     elif choice == "2":
-        order_id = input("Enter the Order ID to fulfill: ").strip()
-        if order_id.isdigit():
-            fulfill_order(int(order_id))
+        oid = input("Enter the Order ID to fulfill: ").strip()
+        if oid.isdigit():
+            fulfill_order(int(oid))
+        else:
+            print("❌ Invalid Order ID.")
+    elif choice == "3":
+        oid = input("Enter the Order ID to invoice: ").strip()
+        if oid.isdigit():
+            process_invoice(int(oid))
         else:
             print("❌ Invalid Order ID.")
     else:
-        print("❌ Invalid choice. Please run again and enter 1 or 2.")
+        print("❌ Invalid choice. Please run again and enter 1, 2 or 3.")
 
 
 if __name__ == "__main__":

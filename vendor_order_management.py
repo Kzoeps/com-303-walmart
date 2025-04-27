@@ -7,7 +7,7 @@ CARRIES_VENDOR_QUERY = """
 SELECT
   c.store_id,
   vp.vendor_id,
-  c.upc           AS product_id,
+  c.upc AS product_id,
   (c.max_quantity - c.quantity) AS reorder_qty
 FROM Carries AS c
 JOIN Vendor_Product AS vp
@@ -26,10 +26,10 @@ INSERT_ORDER_LINE_SQL = """
 INSERT INTO Order_Line
   (order_id, product_id, unit_cost, quantity)
 SELECT
-  %s,               -- new order_id
+  %s, -- new order_id
   vp.product_id,
   vp.quoted_cost,
-  %s                -- reorder quantity
+  %s  -- reorder quantity
 FROM Vendor_Product vp
 WHERE
   vp.vendor_id = %s
@@ -59,7 +59,7 @@ UPDATE_CARRIES_INVENTORY_SQL = """
 UPDATE Carries
    SET quantity = quantity + %s
  WHERE store_id = %s
-   AND upc      = %s;
+   AND upc = %s;
 """
 
 

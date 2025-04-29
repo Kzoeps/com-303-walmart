@@ -132,3 +132,8 @@ the above also has an assumption that the shipment is marked as fullfilled by a 
 - `python-dotenv`
 
 ---
+
+## Things to do
+- [ ] fill up more seed data with realistic data
+- [ ] fill up transactions with record sale.
+- [ ] test queries

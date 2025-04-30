@@ -107,11 +107,17 @@ VALUES
   ('NY', 2, 0.0400, '2025-01-01', TRUE);
 
 -- 6. Brands
-INSERT IGNORE INTO Brand (brand_id, brand_name, brand_category)
-VALUES
-  (1, 'Acme Corp', 'Electronics'),
-  (2, 'Fresh Farms', 'Grocery'),
-  (3, 'StyleWear', 'Clothing');
+INSERT IGNORE INTO Brand (brand_id, brand_name, brand_category) VALUES
+  (1 , 'Apple',                'Electronics'),
+  (2 , 'Samsung',              'Electronics'),
+  (3 , 'Sony',                 'Electronics'),
+  (4 , 'Coca-Cola',            'Beverage'),
+  (5 , 'Nestlé',               'Food'),
+  (6 , 'Nike',                 'Clothing'),
+  (7 , 'Adidas',               'Clothing'),
+  (8 , 'Procter & Gamble',     'Cleaning'),
+  (9 , 'Kellogg''s',           'Food'),
+  (10, 'Levi''s',              'Clothing');
 
 -- 7. Products
 INSERT IGNORE INTO Product (
@@ -219,4 +225,9 @@ VALUES
   (3, 3000001, 20);
 
 -- artificial scarcity to test vendor order. Remove once done
-UPDATE Carries SET quantity = 9 WHERE store_id=1 and upc=1000001;
+UPDATE Carries
+SET
+  quantity = 9
+WHERE
+  store_id = 1
+  and upc = 1000001;

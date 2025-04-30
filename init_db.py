@@ -15,6 +15,10 @@ def execute_sql_file(cursor, filepath):
             cursor.execute(stmt + ";")
 
 
+SCHEMA_FILE = "schema.sql"
+SEED_FILE = "seed-v2.sql"
+
+
 def main():
     # Connect to the database
     cnx = mysql.connector.connect(
@@ -26,11 +30,11 @@ def main():
     cursor = cnx.cursor()
     try:
         print("Applying schema...")
-        execute_sql_file(cursor, "schema.sql")
+        execute_sql_file(cursor, SCHEMA_FILE)
         print("Schema applied successfully.")
 
         print("Seeding data...")
-        execute_sql_file(cursor, "seed.sql")
+        execute_sql_file(cursor, SEED_FILE)
         print("Seed data applied successfully.")
 
         cnx.commit()

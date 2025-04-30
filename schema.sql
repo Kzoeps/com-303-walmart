@@ -24,7 +24,7 @@ CREATE TABLE
 
 CREATE TABLE
   Store (
-    store_id INT PRIMARY KEY,
+    store_id INT AUTO_INCREMENT PRIMARY KEY,
     store_name VARCHAR(255),
     manager_name VARCHAR(255),
     phone_number VARCHAR(255),
@@ -33,7 +33,7 @@ CREATE TABLE
 
 CREATE TABLE
   Customer (
-    customer_id INT PRIMARY KEY,
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     contact_number VARCHAR(255),
@@ -54,7 +54,7 @@ CREATE TABLE
 
 CREATE TABLE
   Payment (
-    payment_id INT PRIMARY KEY,
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
     payment_method VARCHAR(255),
     amount DECIMAL(10, 2),
     payment_date TIMESTAMP,
@@ -66,10 +66,10 @@ CREATE TABLE
 
 CREATE TABLE
   Transaction_Header (
-    transaction_id INT PRIMARY KEY,
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     store_id INT NOT NULL,
     terminal_id INT,
-    datetime TIMESTAMP,
+    datetime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     employee_id INT,
     customer_id INT,
     card_hash VARCHAR(255),
@@ -149,7 +149,7 @@ CREATE TABLE
 
 CREATE TABLE
   Online_Orders (
-    order_id INT PRIMARY KEY,
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
     web_id VARCHAR(255),
     customer_id INT,
     order_date TIMESTAMP,
@@ -400,7 +400,7 @@ CREATE TABLE
   Carries (
     store_id INT,
     upc INT,
-    price FLOAT,
+    price DECIMAL(10, 2),
     quantity INT,
     min_quantity INT,
     max_quantity INT,

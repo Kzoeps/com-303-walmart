@@ -60,15 +60,17 @@ def calculate_real_tax(cursor, store_id, purchased_items):
     total_tax = 0
     cursor.execute("""
         select a.state_name
-        from store s
-        join address a on s.store_id = a.address_id
-        where s.store_id = %s;
+        from physical_store ps
+        join address a on ps.address_id = a.address_id
+        where ps.store_id = %s;
     """, (store_id,))
     
     result = cursor.fetchone()
     
     if not result:
         raise ValueError("store not found or no address linked.")
+
+    state_code = result[0]
 
     for product_id, quantity, unit_price in purchased_items:
         cursor.execute("""

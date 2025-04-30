@@ -93,6 +93,7 @@ def calculate_real_tax(cursor, store_id, purchased_items):
     return round(total_tax, 2)
 
 # function that does the main recording of a sale
+# fetch unit price before looping over purchased_items.
 def record_sale(transaction_id, customer_info, employee_id, store_id, terminal_id, payment_info, purchased_items):
     cnx = get_db_connection()
     cursor = cnx.cursor()

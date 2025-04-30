@@ -135,5 +135,7 @@ the above also has an assumption that the shipment is marked as fullfilled by a 
 
 ## Things to do
 - [ ] fill up more seed data with realistic data
+- [ ] query product details for purchased items
+- [ ] same in online orders for purchased items
 - [ ] fill up transactions with record sale.
 - [ ] test queries

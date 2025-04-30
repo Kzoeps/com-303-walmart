@@ -1,9 +1,11 @@
 import mysql.connector
 from config import DB_USER, DB_PASSWORD, DB_NAME
 from datetime import datetime
+import traceback  # <-- added to show full error messages
+from decimal import Decimal
+
 
 # db connection stuff here
-
 def get_db_connection():
     return mysql.connector.connect(
         host="127.0.0.1",
@@ -60,13 +62,13 @@ def calculate_real_tax(cursor, store_id, purchased_items):
     total_tax = 0
     cursor.execute("""
         select a.state_name
-        from physical_store ps
-        join address a on ps.address_id = a.address_id
-        where ps.store_id = %s;
+        from store s
+        join address a on s.store_id = a.address_id
+        where s.store_id = %s;
     """, (store_id,))
-    
+
     result = cursor.fetchone()
-    
+
     if not result:
         raise ValueError("store not found or no address linked.")
 
@@ -89,13 +91,13 @@ def calculate_real_tax(cursor, store_id, purchased_items):
 
         if rate_row:
             tax_rate = rate_row[0]
-            item_tax = quantity * unit_price * tax_rate
+            item_tax = Decimal(str(unit_price)) * quantity * tax_rate
+
             total_tax += item_tax
 
     return round(total_tax, 2)
 
 # function that does the main recording of a sale
-# fetch unit price before looping over purchased_items.
 def record_sale(transaction_id, customer_info, employee_id, store_id, terminal_id, payment_info, purchased_items):
     cnx = get_db_connection()
     cursor = cnx.cursor()
@@ -125,10 +127,13 @@ def record_sale(transaction_id, customer_info, employee_id, store_id, terminal_i
             line_id += 1
 
         cnx.commit()
-        print("Sale recorded for Transaction" +  str(transaction_id))
-    except:
+        print(" Sale recorded for Transaction", transaction_id)
+    except Exception as e:
         cnx.rollback()
-        print("Something went wrong")
-    cursor.close()
-    cnx.close()
+        print(" Something went wrong:", e)
+        traceback.print_exc()
+    finally:
+        cursor.close()
+        cnx.close()
+
 

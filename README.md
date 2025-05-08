@@ -9,15 +9,28 @@ Repo for Walmart DB design
    - [`process_reorders()`](#process_reorders)
    - [`fulfill_order(order_id)`](#fulfill_orderorder_id)
    - [`process_invoice(order_id)`](#process_invoiceorder_id)
-4. [Database Tables Touched](#database-tables-touched)
-5. [Design Rationale](#design-rationale)
-6. [Dependencies](#dependencies)
+   - [`record_sale()`](#record_sale)
+   - [`generate_orders(n)`](#generate_ordersn)
+   - [`make_online_order()`](#make_online_order)
+4. [Demo Queries](#demo-queries)
+5. [Database Tables Touched](#database-tables-touched)
+6. [Design Rationale](#design-rationale)
+7. [Dependencies](#dependencies)
+
 ---
 **any time you install a new package freeze requiremenst using this command: `pip freeze > requirements.txt`**
 
 ## Overview
 
-Our vendor order management consists of two Python scripts:
+Our project simulates both physical and online store activity using MySQL and Python. It supports:
+
+- Vendor ordering and invoicing
+- In-store transactions (record_sale)
+- Online orders and shipping
+- Custom report queries
+- Loyalty, tax categories, and exemptions
+
+---
 
 - **`vendor_order_management.py`** – interactive CLI to:
   1. reorder low-stock items
@@ -115,6 +128,32 @@ All operations use MySQL transactions for atomicity and consistency.
 | `Invoice_Line_Item` | INSERT line items |
 | `Vendor_Order` | UPDATE invoice_id |
 
+### `record_sale()`
+Records in-store purchases, including:
+- Customer info (inserted if new)
+- Payment details
+- Transaction line items
+- Calculated tax by product + state
+- Loyalty points
+
+**Transactional:** rolls back if anything fails.
+
+| Table                 | Action                  |
+|----------------------|-------------------------|
+| `Customer`           | INSERT if new           |
+| `Payment`            | INSERT                  |
+| `Transaction_Header` | INSERT                  |
+| `Transaction_Line_Item` | INSERT              |
+| `Tax_Category`, `State_Tax_Rate` | READ for tax logic |
+
+
+### `generate_orders(n)`
+Populates the DB with `n` random transactions using `record_sale()`:
+- Random store, terminal, customer, employee
+- 1–3 random products per order
+- Realistic prices and quantities
+
+
 ---
 
 ## Notes 
@@ -132,6 +171,19 @@ the above also has an assumption that the shipment is marked as fullfilled by a 
 - `python-dotenv`
 
 ---
+
+
+## What’s Been Added
+
+- [x] In-store transaction support (`record_sale`)
+- [x] Tax category + rate calculation
+- [x] Loyalty point calculation
+- [x] Online orders (`make_online_order`)
+- [x] Order generation for testing (`generate_orders`)
+- [x] Query reporting (top products, revenue, etc.)
+- [x] Full schema: invoices, receipts, tax exemption
+
+
 
 ## Things to do
 - [ ] fill up more seed data with realistic data

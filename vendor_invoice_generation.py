@@ -134,7 +134,7 @@ def process_invoice(order_id):
             total_amount,
             vendor_id,
         )
-        print(f"🧾 Created Invoice {invoice_id} for PO {order_id}")
+        print(f" Created Invoice {invoice_id} for PO {order_id}")
 
         # Insert invoice lines
         for product_id, qty, cost in lines:
@@ -143,14 +143,14 @@ def process_invoice(order_id):
 
         # Link invoice to PO
         link_invoice_to_vendor_order(cursor, order_id, invoice_id)
-        print(f"🔗 Linked Invoice {invoice_id} to PO {order_id}")
+        print(f" Linked Invoice {invoice_id} to PO {order_id}")
 
         cnx.commit()
-        print("✅ Invoice processing complete.")
+        print(" Invoice processing complete.")
 
     except Exception as e:
         cnx.rollback()
-        print("❌ Failed to process invoice:", e)
+        print(" Failed to process invoice:", e)
 
     finally:
         cursor.close()

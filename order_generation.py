@@ -4,6 +4,7 @@ from record_sale import record_sale
 import mysql.connector
 from config import DB_USER, DB_PASSWORD, DB_NAME
 
+
 def get_db_connection():
     return mysql.connector.connect(
         host="127.0.0.1",
@@ -12,24 +13,30 @@ def get_db_connection():
         database=DB_NAME,
     )
 
+
 # Pull usable data from DB
 def fetch_data():
     cnx = get_db_connection()
     cursor = cnx.cursor()
 
-    cursor.execute("SELECT customer_id, first_name, last_name, contact_number, store_id FROM customer")
+    cursor.execute(
+        "SELECT customer_id, first_name, last_name, contact_number, store_id FROM Customer"
+    )
     customers = cursor.fetchall()
 
-    cursor.execute("""
+    cursor.execute(
+        """
         SELECT c.store_id, c.upc, c.price
-        FROM carries c
-        JOIN product p ON c.upc = p.upc
-    """)
+        FROM Carries c
+        JOIN Product p ON c.upc = p.upc
+    """
+    )
     product_info = cursor.fetchall()
 
     cursor.close()
     cnx.close()
     return customers, product_info
+
 
 def generate_orders(num_orders=10, base_transaction_id=9010):
     customers, product_info = fetch_data()
@@ -45,7 +52,7 @@ def generate_orders(num_orders=10, base_transaction_id=9010):
         employee_id = random.randint(100, 999)
         payment_id = base_transaction_id + i
         transaction_id = base_transaction_id + i
-        payment_method = random.choice(['cash', 'card'])
+        payment_method = random.choice(["cash", "card"])
 
         possible_products = grouped_products.get(store_id)
         if not possible_products:
@@ -68,8 +75,9 @@ def generate_orders(num_orders=10, base_transaction_id=9010):
             store_id=store_id,
             terminal_id=terminal_id,
             payment_info=(payment_id, payment_method, round(total_amount, 2)),
-            purchased_items=items
+            purchased_items=items,
         )
+
 
 # Generate 10 test orders
 generate_orders(100)

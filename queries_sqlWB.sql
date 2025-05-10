@@ -3,8 +3,8 @@ SELECT
     p.item_name,
     SUM(tli.quantity) AS total_units_sold
 FROM
-    transaction_line_item tli
-    JOIN product p ON tli.product_id = p.upc
+    Transaction_Line_Item tli
+    JOIN Product p ON tli.product_id = p.upc
 GROUP BY
     p.item_name
 ORDER BY
@@ -19,18 +19,18 @@ SELECT
     COUNT(th.transaction_id) AS num_transactions,
     SUM(th.total_amount) AS total_spent
 FROM
-    customer c
-    JOIN transaction_header th ON c.customer_id = th.customer_id
+    Customer c
+    JOIN Transaction_Header th ON c.customer_id = th.customer_id
 GROUP BY
     c.customer_id;
 
--- total revenue by Store
+-- Total revenue by Store
 SELECT
     s.store_name,
     SUM(th.total_amount) AS revenue
 FROM
-    transaction_header th
-    JOIN store s ON th.store_id = s.store_id
+    Transaction_Header th
+    JOIN Store s ON th.store_id = s.store_id
 GROUP BY
     s.store_name
 ORDER BY
@@ -47,10 +47,10 @@ SELECT
     tli.unit_price,
     tli.line_total
 FROM
-    customer c
-    JOIN transaction_header th ON c.customer_id = th.customer_id
-    JOIN transaction_line_item tli ON th.transaction_id = tli.transaction_id
-    JOIN product p ON tli.product_id = p.upc
+    Customer c
+    JOIN Transaction_Header th ON c.customer_id = th.customer_id
+    JOIN Transaction_Line_Item tli ON th.transaction_id = tli.transaction_id
+    JOIN Product p ON tli.product_id = p.upc
 ORDER BY
     c.customer_id,
     th.datetime DESC;
